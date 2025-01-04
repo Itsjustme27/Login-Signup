@@ -12,6 +12,36 @@
 <body>
     <!-- TODO: -->
     <!--PHP code for tomorrow -->
+    <?php
+        session_start();
+        include '../config/Database.php';
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+
+
+            // Fetching da data from database
+            $db = new Database();
+            $stmt = $db->getConnection()->prepare('SELECT id, username, password FROM users 
+                                        WHERE email = ?');
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if($result->num_rows > 0) {
+                $user = $result->fetch_assoc();
+                if($password === $user["password"]) {
+                    $_SESSION["user"] = $user;
+                    header("Location: dashboard.php");
+                    exit;
+                } else {
+                    echo "Invalid password";
+                }
+            } else {
+                echo "Email is not registered";
+            }
+        }
+    ?>
 
     <div class="container mt-5">
         <div class="header d-flex justify-content-center align-item-center m-3">

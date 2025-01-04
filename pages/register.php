@@ -17,18 +17,18 @@
 
     include '../config/Database.php';
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $username = $_POST['username'];
         $password = $_POST['password'];
         $email = $_POST['email'];
 
         // simple validation for now
-        if(!empty($username) && !empty($password) && !empty($email)) {
+        if (!empty($username) && !empty($password) && !empty($email)) {
             // instantiating da database right here
             $db = new Database();
             $result = $db->registerUser($username, $email, $password);
 
-            if($result) {
+            if ($result) {
                 $_SESSION['username'] = $username;  // Storing da username in da session les gooo
                 header('Location: login.php');  // redirecting to da dashboard
                 exit;
@@ -58,7 +58,10 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" name="password" id="password" class="form-control">
                 </div>
-                <button type="submit" class="btn btn-primary">Register</button>
+                <div class="submit d-flex justify-content-between align-item-center">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <a href="login.php">Log in instead</a>
+                </div>
             </form>
         </div>
     </div>
