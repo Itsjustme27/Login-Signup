@@ -58,7 +58,10 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" name="password" id="password" class="form-control">
                 </div>
-                <button type="submit" class="btn btn-primary">Log In</button>
+                <div class="submit d-flex justify-content-between align-item-center">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <a href="register.php">Sign Up instead</a>
+                </div>
             </form>
         </div>
     </div>
