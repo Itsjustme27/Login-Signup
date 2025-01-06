@@ -13,9 +13,9 @@
     <?php
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
-    session_start();
 
     include '../config/Database.php';
+    require '../includes/header.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $username = $_POST['username'];
@@ -29,7 +29,6 @@
             $result = $db->registerUser($username, $email, $password);
 
             if ($result) {
-                $_SESSION['username'] = $username;  // Storing da username in da session les gooo
                 header('Location: login.php');  // redirecting to da dashboard
                 exit;
             } else {

@@ -14,24 +14,25 @@
     <!--PHP code for tomorrow -->
     <?php
         session_start();
+        require '../includes/header.php';
         include '../config/Database.php';
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $email = $_POST['email'];
+            $username = $_POST['name'];
             $password = $_POST['password'];
 
 
             // Fetching da data from database
             $db = new Database();
             $stmt = $db->getConnection()->prepare('SELECT id, username, password FROM users 
-                                        WHERE email = ?');
-            $stmt->bind_param("s", $email);
+                                        WHERE username = ?');
+            $stmt->bind_param("s", $username);
             $stmt->execute();
             $result = $stmt->get_result();
 
             if($result->num_rows > 0) {
-                $user = $result->fetch_assoc();
+                // $user = $result->fetch_assoc();
                 if($password === $user["password"]) {
-                    $_SESSION["user"] = $user;
+                    $_SESSION["username"] = $username;
                     header("Location: dashboard.php");
                     exit;
                 } else {
@@ -50,9 +51,9 @@
         <div class="form d-flex  align-item-center justify-content-center">
             <form action="login.php" method="post">
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
-                    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
-                    <div class="form-text" id="emailHelp">We'll never share your email with anyone else.</div>
+                    <label for="name" class="form-label">Username</label>
+                    <input type="text" name="name" class="form-control" id="name" aria-describedby="nameHelp">
+                    <div class="form-text" id="nameHelp">We'll never share your data with anyone else.</div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>

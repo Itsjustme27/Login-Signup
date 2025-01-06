@@ -1,22 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
 </head>
 
 <body>
     <?php
     session_start();
+    require '../includes/header.php';
 
     if (!isset($_SESSION["username"])) {
         header("Location: login.php");
         exit;
     }
 
-    echo "<h1> Welcome, " . $_SESSION['username'] . "!</h1>";
+    echo "
+    <div>
+        <h1> Welcome, " . $_SESSION['username'] . "!</h1>
+    </div>";
     ?>
-    <a href="logout.php">Logout</a>
+    <div>
+        <a href="logout.php">Logout</a>
+    </div>
 </body>
 </html>
