@@ -10,8 +10,6 @@
 </head>
 
 <body>
-    <!-- TODO: -->
-    <!--PHP code for tomorrow -->
     <?php
         session_start();
         require '../includes/header.php';
@@ -19,7 +17,6 @@
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $username = $_POST['name'];
             $password = $_POST['password'];
-
 
             // Fetching da data from database
             $db = new Database();
@@ -30,7 +27,7 @@
             $result = $stmt->get_result();
 
             if($result->num_rows > 0) {
-                // $user = $result->fetch_assoc();
+                $user = $result->fetch_assoc();
                 if($password === $user["password"]) {
                     $_SESSION["username"] = $username;
                     header("Location: dashboard.php");
