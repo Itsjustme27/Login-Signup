@@ -24,7 +24,7 @@
     </div>";
     ?>
     <div>
-        <a href="logout.php">Logout</a>
+        <a href="../sessions/logout.php">Logout</a>
     </div>
 </body>
 </html>

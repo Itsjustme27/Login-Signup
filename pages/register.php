@@ -18,10 +18,11 @@
     require '../includes/header.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        $username = $_POST['username'];            //  TODO: use htmlspecialchars() to sanitize password
+        $password = $_POST['password'];           // TODO: use hashing algo to encrypt using password_hash()
         $email = $_POST['email'];
 
+        password_hash($password, sha1($password));
         // simple validation for now
         if (!empty($username) && !empty($password) && !empty($email)) {
             // instantiating da database right here

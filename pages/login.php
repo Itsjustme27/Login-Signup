@@ -15,7 +15,7 @@
         require '../includes/header.php';
         include '../config/Database.php';
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $username = $_POST['name'];
+            $username = $_POST['name'];              // TODO: use htmlspecialchars() to sanitize input (prevents XSS)
             $password = $_POST['password'];
 
             // Fetching da data from database
