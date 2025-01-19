@@ -18,16 +18,16 @@
     require '../includes/header.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $username = $_POST['username'];            //  TODO: use htmlspecialchars() to sanitize password
-        $password = $_POST['password'];           // TODO: use hashing algo to encrypt using password_hash()
-        $email = $_POST['email'];
+        $username = htmlspecialchars($_POST['username']);            //  TODO: use htmlspecialchars() to sanitize password
+        $password = htmlspecialchars($_POST['password']);           // TODO: use hashing algo to encrypt using password_hash()
+        $email = htmlspecialchars($_POST['email']);
 
-        password_hash($password, sha1($password));
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
         // simple validation for now
         if (!empty($username) && !empty($password) && !empty($email)) {
             // instantiating da database right here
             $db = new Database();
-            $result = $db->registerUser($username, $email, $password);
+            $result = $db->registerUser($username, $email, $hashed_password);
 
             if ($result) {
                 header('Location: login.php');  // redirecting to da dashboard
@@ -47,16 +47,16 @@
             <form action="register.php" method="post">
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" name="username" id="username" class="form-control">
+                    <input type="text" name="username" id="username" class="form-control" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+                    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" required>
                     <div class="form-text" id="emailHelp">We'll never share your email with anyone else.</div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" name="password" id="password" class="form-control">
+                    <input type="password" name="password" id="password" class="form-control" required>
                 </div>
                 <div class="submit d-flex justify-content-between align-item-center">
                     <button type="submit" class="btn btn-primary">Register</button>

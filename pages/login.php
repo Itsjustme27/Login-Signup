@@ -15,8 +15,8 @@
         require '../includes/header.php';
         include '../config/Database.php';
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $username = $_POST['name'];              // TODO: use htmlspecialchars() to sanitize input (prevents XSS)
-            $password = $_POST['password'];
+            $username = htmlspecialchars($_POST['name']);              // TODO: use htmlspecialchars() to sanitize input (prevents XSS)
+            $password = htmlspecialchars($_POST['password']);
 
             // Fetching da data from database
             $db = new Database();
@@ -28,7 +28,7 @@
 
             if($result->num_rows > 0) {
                 $user = $result->fetch_assoc();
-                if($password === $user["password"]) {
+                if(password_verify($password, $user['password'])) {
                     $_SESSION["username"] = $username;
                     header("Location: dashboard.php");
                     exit;
