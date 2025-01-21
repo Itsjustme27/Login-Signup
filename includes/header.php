@@ -12,7 +12,7 @@
 <body>
     <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand">Navbar</a>
+            <a class="navbar-brand">Registration and Login System</a>
             <form class="d-flex flex-row" role="search">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row gap-5">
                     <li class="nav-item">

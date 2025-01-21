@@ -78,6 +78,22 @@ class Database
         }
     }
 
+    public function createTableCrud() {
+        $sql = "CREATE TABLE employee(
+                `S.N.` INT AUTO_INCREMENT PRIMARY KEY,
+                Name VARCHAR(255) NOT NULL,
+                Address VARCHAR(255) NOT NULL,
+                Gender VARCHAR(255) NOT NULL,
+                Department VARCHAR(255) NOT NULL
+        )";
+
+        if($this->conn->query($sql)) {
+            echo "Table 'employee' created succcessfully";
+        } else {
+            echo "Failed to create table.";
+        }
+    }
+
     // Method for inserting da data from form 
     public function registerUser($username, $email, $password) {
         $sql = "INSERT INTO users (username, email,password)
@@ -96,14 +112,45 @@ class Database
         }
     }
 
+    public function registerEmployee($name, $address, $gender, $department) {
+        $sql = "INSERT INTO employee (Name, Address, Gender, Department)
+                VALUES (?, ?, ?, ?)";
+    
+        $stmt = $this->conn->prepare($sql);
+        if (!$stmt) {
+            echo "Prepare failed: " . $this->conn->error; // Debugging prepared statement issues
+            return false;
+        }
+    
+        $stmt->bind_param("ssss", $name, $address, $gender, $department);
+    
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            echo "Execution failed: " . $stmt->error; // Debugging execution issues
+            return false;
+        }
+    }
+    
+    public function viewTableEmployee() {
+        $sql = "SELECT * FROM employee";
+        $stmt = $this->conn->prepare($sql);
+        if($stmt->execute()) {
+            return true;
+        } else {
+            echo "Failed to fetch data: " . $stmt->error . "";
+        }
+    }
     // Just a method for closing connection after finishing da business
     public function closeConnection() {
         $this->conn->close();
     }
-
 }
 
 // $db = new Database();
 // $db->createTable();
+// $db->closeConnection();
+// $db = new Database();
+// $db->createTableCrud();
 // $db->closeConnection();
 ?>
