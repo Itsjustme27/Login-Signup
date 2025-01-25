@@ -51,9 +51,9 @@ class Database
         // Checking da Connection!!
         if ($this->conn->connect_error) {
             die("Error Connecting : " . $this->conn->connect_error . "\n");
-        } else {
+        } /* else {
             echo "Connection Successful\n";
-        }
+        } */
     }
 
     public function getConnection() {
@@ -132,14 +132,25 @@ class Database
         }
     }
     
-    public function viewTableEmployee() {
-        $sql = "SELECT * FROM employee";
+    public function updateEmployee($name, $address,$gender, $department) {
+        $sql = "UPDATE employee SET `Name` = ? , `Address` = ? , `Gender` = ? , `Department` = ? WHERE `S.N.`=" .$_GET["id"];
+
         $stmt = $this->conn->prepare($sql);
+
+        if (!$stmt) {
+            echo "Prepare failed: " . $this->conn->error; // Debugging prepared statement issues
+            return false;
+        }
+
+        $stmt->bind_param("ssss", $name, $address, $gender, $department);
+
         if($stmt->execute()) {
             return true;
         } else {
-            echo "Failed to fetch data: " . $stmt->error . "";
+            return false;
         }
+
+
     }
     // Just a method for closing connection after finishing da business
     public function closeConnection() {
