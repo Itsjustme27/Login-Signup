@@ -1,2 +1,3 @@
 # Login-Signup
-Log In and Sign Up pages using php
+Log In and Sign Up pages with CRUD functionality in php
+
